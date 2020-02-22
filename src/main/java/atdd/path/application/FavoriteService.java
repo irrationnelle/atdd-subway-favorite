@@ -1,6 +1,7 @@
 package atdd.path.application;
 
 import atdd.path.application.dto.CreateStationRequestView;
+import atdd.path.application.dto.FavoriteResponseView;
 import atdd.path.domain.Favorite;
 import atdd.path.domain.Station;
 import atdd.path.domain.User;
@@ -34,6 +35,14 @@ public class FavoriteService {
                 .orElseGet(() -> createFavoriteForStation(user, station)));
 
         return ResponseEntity.of(optionalFavoriteToSaveStation);
+    }
+
+    public ResponseEntity retriveStationFavorites(User user) {
+        Long userId = user.getId();
+
+        Optional<Favorite> favoriteOptional = favoriteRepository.findByUserId(userId);
+
+        return ResponseEntity.of(favoriteOptional.map(FavoriteResponseView::of));
     }
 
     private Favorite saveStationForFavorite(Favorite favorite, Station station) {

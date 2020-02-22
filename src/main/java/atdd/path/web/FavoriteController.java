@@ -20,4 +20,9 @@ public class FavoriteController {
     public ResponseEntity createStationFavorite(@RequestBody CreateStationRequestView view, @LoginUser User user) {
         return favoriteService.addStationFavorite(view, user);
     }
+
+    @GetMapping("/stations")
+    public ResponseEntity retrieveSationsFavorites(@LoginUser User user) {
+        return favoriteService.retriveStationFavorites(user);
+    }
 }
